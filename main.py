@@ -26,68 +26,54 @@ def get_user_name(login, password):
     conn.close()
     return row[0] if row else None
 
-# Функция для получения информации о subtopic из базы данных
-# нужно доделать получение класса в котором учится ребенок
-def fetch_subtopics():
+def get_user_year_of_study(login, password):
     conn = psycopg2.connect(**db_params)
     cur = conn.cursor()
-    cur.execute("SELECT s.subtopic_name FROM subtopics s JOIN task_topic_year_of_study t ON s.subtopic_id = t.subtopic_id WHERE t.year_of_study_id = 9")
+    cur.execute("SELECT fk_year_of_study_id FROM students WHERE st_login = %s AND st_password = %s", (login, password))
+    row = cur.fetchone()
+    conn.close()
+    return row[0] if row else None
+
+# Функция для получения информации о subtopic из базы данных
+def fetch_subtopics(login, password):
+    year_of_study = get_user_year_of_study(login, password)
+    if year_of_study is None:
+        return None  # Обработка случая, когда пользователь не найден или год обучения не указан
+
+    conn = psycopg2.connect(**db_params)
+    cur = conn.cursor()
+    cur.execute("SELECT s.subtopic_name FROM subtopics s JOIN task_topic_year_of_study t ON s.subtopic_id = t.subtopic_id WHERE t.year_of_study_id = %s", (year_of_study,))
     subtopics = cur.fetchall()
     conn.close()
     return subtopics
 
 # Получаем информацию о subtopic из базы данных
-subtopics = fetch_subtopics()
+#subtopics = fetch_subtopics(login, password)
 
 
 
 @app.route('/login', methods=['POST'])
 def login():
-    # Получение введенных значений логина и пароля
     login = request.form['login']
     password = request.form['password']
-    user_name = get_user_name(login, password)
-    if user_name:
-        return redirect(url_for('home_page', user_name=user_name))
-    else:
-        conn = psycopg2.connect(**db_params)
-        cur = conn.cursor()
 
-        # Выполнение SQL-запроса для проверки наличия значения в таблице students
-        cur.execute("SELECT * FROM students WHERE st_login = %s AND st_password = %s", (login, password))
-        result = cur.fetchone()
-
-        # Закрытие курсора и соединения
-        cur.close()
-        conn.close()
-
-        if result:
-            return redirect(url_for('home_page'))
-        else:
-            return "Ошибка: неверный логин или пароль"
-        pass
-
-    # Установка соединения с базой данных
-    conn = psycopg2.connect(**db_params)
-    cur = conn.cursor()
-
-    # Выполнение SQL-запроса для проверки наличия значения в таблице students
-    cur.execute("SELECT * FROM students WHERE st_login = %s AND st_password = %s", (login, password))
-    result = cur.fetchone()
-
-    # Закрытие курсора и соединения
-    cur.close()
-    conn.close()
-
-    if result:
-        return redirect(url_for('home_page'))
+    # Проверка наличия пользователя в базе данных
+    if get_user_name(login, password):
+        return redirect(url_for('home_page', login=login, password=password))
     else:
         return "Ошибка: неверный логин или пароль"
 
 @app.route('/home')
 def home_page():
-    user_name = request.args.get('user_name')
-    return render_template('Home page.html', user_name=user_name, subtopics=subtopics)
+    login = request.args.get('login')
+    password = request.args.get('password')
+
+    subtopics = fetch_subtopics(login, password)
+
+    if subtopics:
+        return render_template('Home page.html', user_name=login, subtopics=subtopics)
+    else:
+        return "Ошибка: Пользователь не найден или не указан год обучения."
 
 #нужно сделать так, чтобы в блоке заданий выводились названия только тех subtopic, которые соответсвуют году обучения
 
