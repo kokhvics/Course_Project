@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Smarty</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='exers.css') }}">
+</head>
+<body>
+    <div class="container fade-in">
+        <div style="display: flex; flex-direction: column;">
+            <div class="top-rectangle" style="display: flex; flex-direction: row;">
+                <div class="empty-place"></div>
+                <div class="empty-circle-top"></div>
+                <div class="empty-circle-top"></div>
+                <div class="empty-circle-top"></div>
+            </div>
+            <div class="bottom-rectangle" style="display: flex; flex-direction: column;">
+                <div class="text-box">Текст задания, например: Найти значение выражения</div>
+            </div>
+            <!-- -->
+        </div>
+    </div>
+    <script>
+        // JavaScript для автоматического перехода через 5 секунд
+        setTimeout(function() {
+            window.location.href = '/exersice_text_left';
+        }, 2000);
+    </script>
+</body>
+</html>

@@ -1,0 +1,133 @@
+@font-face {
+  font-family: 'DM Sans';
+  src: url('static/DMSans-Regular.woff2') format('woff2'), /* Формат шрифта WOFF2 */
+       url('fonts/DMSans-SemiBold.ttf') format('ttf'); /* Формат шрифта WOFF */
+}
+
+body {
+    font-family: DM Sans;
+    background-color:  #DFE7EA;
+    border-radius: 36px;
+    
+}
+
+element.styles {
+    display: inline-block;
+    width: 519px;
+}
+
+.block-overlay {
+    width: 150px;
+    height: 250px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 1;
+}
+
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    border-radius: 15px;
+    background: #5D5A88;
+}
+
+.login-container {
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-width: 519px;
+    padding: 53px 50px 28px;
+    background: #B6CCD2;
+    border-radius: 30px;
+    text-align: center;
+}
+
+.login-box input {
+    width: 90%;
+    margin-bottom: 20px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    font: 700 20px DM Sans;
+    border-radius: 20px;
+}
+
+.login-box button {
+    padding: 18px 24px;
+    background-color: #5D5A88;
+    margin-bottom: 20px;
+    border: none;
+    cursor: pointer;
+    border-radius: 30px;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    color: #FFFFFF;
+    font: 700 24px DM Sans;
+    gap: 10px;
+ }
+
+ .card-container {
+    box-sizing: border-box;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: center;
+    min-width: 480px;
+    padding: 56px 32px 41px 43px;
+    background: #5D5A88;
+    border-radius: 30px;
+    position: fixed;
+    top: 50%;
+    left: 35%;
+    transform: translate(-50%, -50%);
+}
+
+.padded-container {
+    flex: 0 0 auto;
+    padding-right: 9px;
+    padding-left: 9px;
+}
+
+.golden-heading {
+    box-sizing: border-box;
+    max-width: 291px;
+    font: 700 48px/50px DM Sans;
+    color: #D8E2E6;
+    text-align: left;
+}
+
+.flex-container-with-gap {
+    display: flex;
+    flex: 0 0 auto;
+    flex-direction: row;
+    gap: 21px;
+    align-items: center;
+    justify-content: flex-start;
+    margin-top: 44px;
+}
+
+.yellow-box1 {
+    box-sizing: border-box;
+    flex: 0 0 auto;
+    width: 46px;
+    height: 13px;
+    background: #D8E2E6;
+    border-radius: 3px;
+}
+.yellow-box {
+    box-sizing: border-box;
+    flex: 0 0 auto;
+    width: 42px;
+    height: 42px;
+    background: #D8E2E6;
+    border-radius: 3px;
+}
+

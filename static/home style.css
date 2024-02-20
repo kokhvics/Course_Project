@@ -1,0 +1,234 @@
+body {
+    font-family: DM Sans;
+    background-color:  #DFE7EA;
+    border-radius: 36px;
+}
+
+.profile-container {
+box-sizing: border-box;
+display: flex;
+justify-content: flex-start;
+flex-direction: row;
+align-items: center;
+min-width: 353px;
+height: 97px;
+padding-right: 17px;
+padding-left: 17px;
+background: #F9F9FF;
+border-radius: 20px;
+}
+
+.avatar-container {
+flex: 0 0 auto;
+border-radius: 50px;
+}
+
+.image-container {
+box-sizing: border-box;
+display: block;
+width: 72px;
+max-width: initial;
+height: 72px;
+}
+
+.img-content {
+content: url("https://i.pinimg.com/236x/30/fb/20/30fb20c104d2215945bb77a7043a21bc.jpg");
+border-radius: 50px;
+}
+
+.name {
+flex: 0 0 auto;
+padding: 0;
+margin: 0;
+margin-left: 26px;
+font: 700 32px DM Sans;
+color: rgba(86, 86, 86, 1);
+}
+
+
+
+
+.card-container {
+display: flex;
+flex-direction: column;
+gap: 16px;
+align-items: stretch;
+justify-content: center;
+padding: 17px 33px 586px;
+background: #F9F9FF;
+border-radius: 20px;
+}
+
+.section-container {
+display: flex;
+flex: 0 0 auto;
+flex-direction: row;
+align-items: center;
+justify-content: flex-start;
+}
+
+.section-container:last-child {
+padding-right: 4px;
+padding-left: 4px;
+}
+
+.profile-image-wrapper {
+flex: 0 0 auto;
+}
+
+.image-container {
+box-sizing: border-box;
+display: block;
+width: 49px;
+max-width: initial;
+}
+
+.section-title-heading {
+flex: 0 0 auto;
+padding: 0;
+margin: 0;
+margin-left: 12px;
+font: 700 32px DM Sans;
+color: #565656;
+white-space: pre-wrap;
+}
+
+
+
+
+.task-status-container {
+box-sizing: border-box;
+display: flex;
+flex-direction: column;
+align-items: stretch;
+justify-content: flex-start;
+min-width: 950px;
+padding: 30px 43px 50px 37px;
+background: #B6CCD2;
+border-radius: 50px;
+}
+
+.available-tasks {
+        flex: 0 0 auto;
+        padding-right: 3px;
+      }
+      .task-container {
+        display: flex;
+        flex-direction: column;
+        align-items: stretch;
+        justify-content: flex-start;
+        padding: 18px 68px 8px;
+        background: rgba(249, 249, 255, 1);
+        border-radius: 40px;
+      }
+      .available-tasks-title {
+        flex: 0 0 auto;
+        padding: 0;
+        margin: 0;
+        font: 700 48px DM Sans;
+        color: rgba(0, 0, 0, 1);
+        text-align: center;
+      }
+      .division-status-table {
+        flex: 0 0 auto;
+        padding-left: 3px;
+        margin-top: 20px;
+      }
+      .feature-list-container {
+        box-sizing: border-box;
+        display: flex;
+        flex-direction: column;
+        align-items: stretch;
+        justify-content: flex-start;
+        max-width: 867px;
+        background: linear-gradient(180deg, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 1) 100%);
+        border-radius: 40px;
+      }
+      .fraction-operation-card {
+        box-sizing: border-box;
+        display: flex;
+        flex: 0 0 auto;
+        flex-direction: row;
+        gap: 8px;
+        align-items: center;
+        justify-content: space-between;
+        height: 109px;
+        padding-right: 33px;
+        padding-left: 40px;
+        background: rgba(249, 249, 255, 1);
+        border-radius: 40px;
+      }
+      .division-indicator {
+        padding: 0;
+        margin: 0;
+        font: 700 20px DM Sans;
+        color: rgba(0, 0, 0, 1);
+      }
+      .division-indicator1 {
+        padding-right: 40px;
+        padding-left: 8px;
+        border-top-right-radius: 40px;
+        border-bottom-right-radius: 40px;
+      }
+      .progress-counter {
+        display: flex;
+        flex: 1 0 auto;
+        flex-direction: row;
+        align-items: center;
+        justify-content: flex-start;
+        margin-left: 5px;
+      }
+      .number-container {
+        box-sizing: border-box;
+        flex: 1 0 65px;
+        padding: 0;
+        margin: 0;
+        font: 700 48px DM Sans;
+        color: rgba(0, 0, 0, 1);
+        text-align: center;
+      }
+      .number-divider {
+        box-sizing: border-box;
+        flex: 1 0 37px;
+        padding: 0;
+        margin: 0;
+        font: 700 48px DM Sans;
+        color: rgba(0, 0, 0, 1);
+        text-align: center;
+      }
+      .number-text {
+        box-sizing: border-box;
+        flex: 1 0 64px;
+        padding: 0;
+        margin: 0;
+        font: 700 48px DM Sans;
+        color: rgba(0, 0, 0, 1);
+        text-align: center;
+      }
+      .fraction-operations-container {
+        display: flex;
+        flex: 0 0 auto;
+        flex-direction: column;
+        gap: 17px;
+        align-items: stretch;
+        justify-content: center;
+        padding-top: 17px;
+        padding-bottom: 3px;
+      }
+      .fraction-actions-title {
+        box-sizing: border-box;
+        flex: 0 1 392px;
+        padding: 0;
+        margin: 0;
+        font: 700 20px/30px DM Sans;
+        color: rgba(0, 0, 0, 1);
+        text-align: left;
+      }
+      .fraction-container {
+        box-sizing: border-box;
+        display: flex;
+        flex: 1 0 297px;
+        flex-direction: row;
+        align-items: center;
+        justify-content: flex-start;
+      }

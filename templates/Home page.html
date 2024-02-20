@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Smarty</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='home style.css') }}">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@700" />
+</head>
+<body>
+    <div style="display: flex; flex-direction: column;">
+        <div style="display: inline-block; width: 353px; margin-top: 10px" data-ignore="used only for top most containter width">
+        <div class="profile-container">
+          <div class="avatar-container">
+            <img class="image-container img-content" />
+          </div>
+          <p class="name">{{ user_name }}</p>
+        </div>
+      </div>
+
+        <div style="display: inline-block; width: 353px;  margin-top: 25px" data-ignore="used only for top most containter width">
+            <div class="card-container">
+                <div class="section-container section-container:last-child">
+                <div class="profile-image-wrapper">
+                <img class="image-container" style="height: 45px; content: url('data:image/svg+xml;charset=utf8,%3Csvg%20viewBox%3D%220%200%2044.8959%2044.848%22%20x%3D%220%22%20y%3D%220%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%3Cg%20id%3D%22home-2_2%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%3Cpath%20id%3D%22Vector_5%22%20d%3D%22M34.2689%2C44.348h-23.6423c-5.5941%2C0%20-10.1266%2C-4.553%20-10.1266%2C-10.147v-15.129c0%2C-2.776%201.715%2C-6.268%203.92%2C-7.983l11.0045%2C-8.575c3.3075%2C-2.572%208.5955%2C-2.695%2012.0255%2C-0.286l12.6179%2C8.841c2.429%2C1.694%204.328%2C5.329%204.328%2C8.289v14.863c0%2C5.574%20-4.533%2C10.127%20-10.127%2C10.127zM17.3029%2C4.923l-11.0046%2C8.575c-1.4496%2C1.144%20-2.7358%2C3.737%20-2.7358%2C5.574v15.129c0%2C3.9%203.1645%2C7.085%207.0641%2C7.085h23.6423c3.9%2C0%207.064%2C-3.165%207.064%2C-7.065v-14.863c0%2C-1.96%20-1.408%2C-4.675%20-3.021%2C-5.778l-12.6178%2C-8.84c-2.3275%2C-1.634%20-6.1658%2C-1.552%20-8.3912%2C0.183z%22%20fill%3D%22%23565656%22%2F%3E%3Cpath%20id%3D%22Vector_6%22%20d%3D%22M22.4479%2C36.181c-0.8371%2C0%20-1.5312%2C-0.694%20-1.5312%2C-1.531v-6.125c0%2C-0.837%200.6941%2C-1.531%201.5312%2C-1.531c0.8371%2C0%201.5312%2C0.694%201.5312%2C1.531v6.125c0%2C0.837%20-0.6941%2C1.531%20-1.5312%2C1.531z%22%20fill%3D%22%23565656%22%2F%3E%3C%2Fg%3E%3C%2Fsvg%3E')" />
+                </div>
+                <p class="section-title-heading">Кабинет</p>
+                </div>
+                    <div class="section-container">
+                    <div class="profile-image-wrapper">
+                    <img class="image-container" style="height: 45px; content: url('data:image/svg+xml;charset=utf8,%3Csvg%20viewBox%3D%220%200%2041.1797%2044.9065%22%20x%3D%220%22%20y%3D%220%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%3Cg%20id%3D%22warning-2_2%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%3Cpath%20id%3D%22Vector_2%22%20d%3D%22M20.5897%2C26.0315c-0.8371%2C0%20-1.5312%2C-0.694%20-1.5312%2C-1.531v-10.719c0%2C-0.837%200.6941%2C-1.531%201.5312%2C-1.531c0.8371%2C0%201.5312%2C0.694%201.5312%2C1.531v10.719c0%2C0.837%20-0.6941%2C1.531%20-1.5312%2C1.531z%22%20fill%3D%22%23565656%22%2F%3E%3Cpath%20id%3D%22Vector_3%22%20d%3D%22M20.5897%2C33.1775c-0.5513%2C0%20-1.0617%2C-0.204%20-1.4496%2C-0.592c-0.1838%2C-0.204%20-0.3267%2C-0.429%20-0.4492%2C-0.674c-0.102%2C-0.245%20-0.1429%2C-0.511%20-0.1429%2C-0.776c0%2C-0.531%200.2246%2C-1.062%200.5921%2C-1.45c0.7554%2C-0.755%202.1438%2C-0.755%202.8992%2C0c0.3675%2C0.388%200.592%2C0.919%200.592%2C1.45c0%2C0.265%20-0.0612%2C0.531%20-0.1633%2C0.776c-0.1021%2C0.245%20-0.2449%2C0.47%20-0.4287%2C0.674c-0.3879%2C0.388%20-0.8984%2C0.592%20-1.4496%2C0.592z%22%20fill%3D%22%23565656%22%2F%3E%3Cpath%20id%3D%22Vector_4%22%20d%3D%22M20.5901%2C44.4065c-1.3679%2C0%20-2.7563%2C-0.347%20-3.9813%2C-1.062l-12.1275%2C-7.003c-2.45%2C-1.429%20-3.9813%2C-4.063%20-3.9813%2C-6.901v-13.965c0%2C-2.838%201.5313%2C-5.471%203.9813%2C-6.9l12.1275%2C-7.003c2.45%2C-1.43%205.4922%2C-1.43%207.9626%2C0l12.1273%2C7.003c2.45%2C1.429%203.981%2C4.062%203.981%2C6.9v13.965c0%2C2.838%20-1.531%2C5.472%20-3.981%2C6.901l-12.1273%2C7.003c-1.225%2C0.715%20-2.6134%2C1.062%20-3.9813%2C1.062zM20.5901%2C3.5725c-0.8371%2C0%20-1.6946%2C0.225%20-2.45%2C0.654l-12.1275%2C7.003c-1.5109%2C0.878%20-2.4501%2C2.491%20-2.4501%2C4.246v13.965c0%2C1.736%200.9392%2C3.369%202.4501%2C4.247l12.1275%2C7.003c1.5108%2C0.878%203.3892%2C0.878%204.8796%2C0l12.127%2C-7.003c1.511%2C-0.878%202.451%2C-2.491%202.451%2C-4.247v-13.965c0%2C-1.735%20-0.94%2C-3.368%20-2.451%2C-4.246l-12.127%2C-7.003c-0.735%2C-0.429%20-1.5925%2C-0.654%20-2.4296%2C-0.654z%22%20fill%3D%22%23565656%22%2F%3E%3C%2Fg%3E%3C%2Fsvg%3E')" />
+                    </div>
+                    <p class="section-title-heading">Мои ошибки</p>
+                    </div>
+                        <div class="section-container section-container:last-child">
+                        <div class="profile-image-wrapper">
+                        <img class="image-container" style="height: 40px; content: url('data:image/svg+xml;charset=utf8,%3Csvg%20viewBox%3D%220%200%2040%2040%22%20x%3D%220%22%20y%3D%220%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%3Cpath%20id%3D%22Vector%22%20fill-rule%3D%22evenodd%22%20clip-rule%3D%22evenodd%22%20d%3D%22M32.536%2C39.5h-25.0717c-3.8457%2C0%20-6.9643%2C-3.119%20-6.9643%2C-6.964v-25.072c0%2C-3.845%203.1186%2C-6.964%206.9643%2C-6.964h25.0717c3.845%2C0%206.964%2C3.119%206.964%2C6.964v25.072c0%2C3.845%20-3.119%2C6.964%20-6.964%2C6.964zM7.4643%2C36.714h25.0717c2.308%2C0%204.178%2C-1.87%204.178%2C-4.178v-16.715h-33.4283v16.715c0%2C2.308%201.8706%2C4.178%204.1786%2C4.178zM3.2857%2C13.036v-5.572c0%2C-2.308%201.8706%2C-4.178%204.1786%2C-4.178h25.0717c2.308%2C0%204.178%2C1.87%204.178%2C4.178v5.572z%22%20fill%3D%22%23565656%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%2F%3E%3C%2Fsvg%3E')" />
+                        </div>
+                        <p class="section-title-heading">Расписание</p>
+                        </div>
+                        </div>
+                    </div>
+
+                <div style="position: absolute; left: 420px; margin-top: 10px"data-ignore="used only for top most containter width">
+                <div class="task-status-container">
+                    <div class="available-tasks">
+                        <div class="task-container">
+                        <p class="available-tasks-title">Доступные задания</p>
+                        </div>
+                    </div>
+                <div class="division-status-table">
+                    <div class="feature-list-container">
+
+                        <div class="fraction-operations-container">
+                            {% for subtopic in subtopics %}
+                                <div class="fraction-operation-card">
+                                    <p class="division-indicator">{{ subtopic[0] }}</p>
+                                    <div class="division-indicator1">
+                                        <p class="division-indicator">Выполнено:</p>
+                                        <div class="progress-counter">
+                                            <p class="number-container">0</p>
+                                            <p class="number-divider">/</p>
+                                            <p class="number-text">0</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>

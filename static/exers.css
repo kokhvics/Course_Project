@@ -1,0 +1,161 @@
+body {
+    margin: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #FFFFFF;
+    border-radius: 36px;
+}
+
+.container {
+    background-color: #B6CCD2;
+    border-radius: 18px;
+    padding: 53px 50px 28px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+    width: 457px;
+    height: 303px;
+    margin: auto; /* Добавлено для центрирования по горизонтали */
+    margin-top: 50vh; /* Добавлено для центрирования по вертикали (может потребоваться настроить) */
+    transform: translateY(-50%);
+    text-align: center;
+    color:#5D5A88
+}
+.container h1 {
+    font-size: 200px;
+    font-weight: bold;
+    color:#5D5A88
+    margin: 0; /* Убирает внутренние отступы h1 */
+}
+
+
+.top-rectangle {
+    width: 1098px; /* Ширина узкого прямоугольника */
+     /* max-width: 54px;Максимальная ширина узкого прямоугольника */
+    height: 54px; /* Высота узкого прямоугольника */
+    background-color: #EFEFEF;
+    margin: 20px auto 0; /* Отступ от верхней границы и центрирование по горизонтали */
+    border-radius: 67px;
+    display: flex;
+    align-items: safe center;
+    /*align-items: center;
+    justify-content: center;*/
+}
+
+.bottom-rectangle {
+    width: 1098px; /* Ширина большого прямоугольника */
+     /* max-width: 800px;Максимальная ширина большого прямоугольника */
+    height: 600px; /* Высота большого прямоугольника */
+    background-color: #D8E2E6;
+    margin: 50px auto; /* Отступ от верхнего прямоугольника и центрирование по горизонтали */
+    border-radius: 40px;
+    display: flex;
+    align-items: safe center;
+    justify-content: start;
+}
+.left-bottom-rectangle {
+    width: 523px; /* Ширина большого прямоугольника */
+     /* max-width: 800px;Максимальная ширина большого прямоугольника */
+    height: 600px; /* Высота большого прямоугольника */
+    background-color: #D8E2E6;
+    margin: 50px 0px; /* Отступ от верхнего прямоугольника и центрирование по горизонтали */
+    border-radius: 40px;
+    display: flex;
+    align-items: safe center;
+    justify-content: start;
+}
+
+
+.empty-sirqle-top{
+    width: 24px; /* Диаметр = радиус * 2 + толщина границы * 2 */
+    height: 24px; /* Диаметр = радиус * 2 + толщина границы * 2 */
+    /*border: 3px solid transparent; /* Толщина границы 3 пикселя, прозрачная */
+    border-radius: 50%; /* Делаем границы круглыми */
+    color: #5D5A88;
+    margin-right: 6px; /* Расстояние между кругами */
+    display: inline-block; /* Делаем блоки строчно-блочными, чтобы они шли в ряд */
+}
+.empty-place{
+    width: 10px;
+    height: 33px;
+    background-color: transparent;
+}
+.empty-circle-top {
+    width: 33px;
+    height: 33px;
+    background-color: transparent; /* Прозрачный фон */
+    border: 3px solid #5D5A88; /* Граница толщиной 2 пикселя и цветом #5D5A88 */
+    border-radius: 50%;
+    margin-right: 6px;
+}
+.text-box{
+    margin: 70px 70px;
+    /*margin-right: 70px;*/
+    font-size: 56px;
+    font-weight: bold;
+    color:#5D5A88
+}
+.left-text-box{
+    margin: 70px 70px;
+    /*margin-right: 70px;*/
+    font-size: 36px;
+    font-weight: bold;
+    color:#5D5A88
+}
+
+.variant-box{
+    width: 265px;
+    height: 265px;
+    border-radius: 40px;
+    background-color: #A1C7F4;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0px 14px 42px rgba(0, 0, 0, 0.2);
+    margin: 20px 20px;
+}
+
+.variant-text-box{
+    font-size: 40px;
+    font-weight: bold;
+    color:#5D5A88
+}
+
+.variant-box-right{
+    width: 265px;
+    height: 265px;
+    border-radius: 40px;
+    background-color: #DDEFB7;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0px 14px 42px rgba(0, 0, 0, 0.2);
+    margin: 20px 20px;
+}
+.variant-box-wrong{
+    width: 265px;
+    height: 265px;
+    border-radius: 40px;
+    background-color: #F4A1A5;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0px 14px 42px rgba(0, 0, 0, 0.2);
+    margin: 20px 20px;
+}
+
+.fade-in {
+    animation: fadeInAnimation 0.5s ease-in-out forwards;
+    opacity: 0;
+}
+
+@keyframes fadeInAnimation {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}

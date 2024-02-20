@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Smarty</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+ <form method="POST" action="{{ url_for('login') }}">
+    <div class="block-overlay">
+        <div style="display: inline-block; width: 519px" class="login-container">
+            <div class="login-box">
+                <input name='login' placeholder="  Логин">
+                <input name='password' placeholder="  Пароль">
+                <button type="submit">  Войти</button>
+            </div>
+        </div>
+    </div>
+    <div class = "card-container">
+        <div class="padded-container">
+            <p class="golden-heading">
+                Парочка
+                <br />
+                усилий
+                <br />
+                сегодня
+                <br />
+                для
+                <br />
+                уверенного
+                <br />
+                завтра
+            </p>
+            <div class="flex-container-with-gap">
+                <div class="yellow-box1"></div>
+                <div class="yellow-box1"></div>
+                <div class="yellow-box1"></div>
+                <div class="yellow-box1"></div>
+                <div class="yellow-box"></div>
+                </div>
+        </div>
+    </div>
+ </form>
+</body>
+</html>
