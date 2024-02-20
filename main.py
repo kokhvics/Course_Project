@@ -70,8 +70,15 @@ def home_page():
 
     subtopics = fetch_subtopics(login, password)
 
+    # Получение URL из базы данных
+    conn = psycopg2.connect(**db_params)
+    cur = conn.cursor()
+    cur.execute("SELECT url FROM students WHERE st_login = %s AND st_password = %s", (login, password))
+    image_url = cur.fetchone()[0]
+    conn.close()
+
     if subtopics:
-        return render_template('Home page.html', user_name=login, subtopics=subtopics)
+        return render_template('Home page.html', user_name=login, subtopics=subtopics, image_url=image_url)
     else:
         return "Ошибка: Пользователь не найден или не указан год обучения."
 
