@@ -87,7 +87,12 @@ def home_page():
 #нужно завести массив или другую структуру данных, чтобы хранить а)количество заданий в этой теме, б)присваивать номеру
 #задания которе сейчас выполняется id задания из бд
 
+
 @app.route('/exersice')
+def exers_info():
+    return render_template('exer_info.html')
+
+@app.route('/exersice_start')
 def exers_num():
     return render_template('the_exercise.html')
 
