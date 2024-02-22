@@ -10,18 +10,42 @@
 
 <div style="display: flex; flex-direction: column;">
     <div class="info-container">
-        <p class="main-title-text-style">Тема задания</p>
+        <p class="main-title-text-style" id="topicName">Тема задания</p>
         <div class="task-info-container" >
             <p class="task-count-display-style1">Количество заданий</p>
             <p class="task-count-display-style">0</p>
         </div>
 
-        <button class="start-button-container">
+        <button class="start-button-container" id="startButton">
             <p class="intro-text-heading">Начать</p>
         </button>
     </div>
 </div>
 
+    <script>
+        // Функция для извлечения параметра из URL
+        function getUrlParameter(name) {
+            name = name.replace(/[\[]/, '\\[').replace(/[\]]/, '\\]');
+            var regex = new RegExp('[\\?&]' + name + '=([^&#]*)');
+            var results = regex.exec(location.search);
+            return results === null ? '' : decodeURIComponent(results[1].replace(/\+/g, ' '));
+        };
+
+        // Получаем значение параметра "subtopic" из URL
+        var subtopicName = getUrlParameter('subtopic');
+
+        // Обновляем содержимое блока с id "topicName" значением subtopicName
+        document.getElementById('topicName').innerText = subtopicName;
+
+                // Находим кнопку "Начать" по её ID
+        var startButton = document.getElementById('startButton');
+
+        // Добавляем обработчик события на клик по кнопке "Начать"
+        startButton.addEventListener('click', function() {
+            // Перенаправляем пользователя на страницу /exersice_start
+            window.location.href = '/exersice_start';
+        });
+    </script>
 
 </body>
 </html>

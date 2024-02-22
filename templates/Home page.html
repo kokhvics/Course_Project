@@ -50,10 +50,10 @@
                 <div class="division-status-table">
                     <div class="feature-list-container">
 
-                        <div class="fraction-operations-container">
+                        <div class="fraction-operations-container" >
                             {% for subtopic in subtopics %}
-                                <div class="fraction-operation-card">
-                                    <p class="division-indicator">{{ subtopic[0] }}</p>
+                                <button class="fraction-operation-card" onclick="redirectToExercise('{{ subtopic[0] }}')">
+                                    <div class="division-indicator">{{ subtopic[0] }}</div>
                                     <div class="division-indicator1">
                                         <p class="division-indicator">Выполнено:</p>
                                         <div class="progress-counter">
@@ -62,7 +62,7 @@
                                             <p class="number-text">0</p>
                                         </div>
                                     </div>
-                                </div>
+                                </button>
                             {% endfor %}
                         </div>
                     </div>
@@ -70,6 +70,10 @@
             </div>
         </div>
     </div>
-
+<script>
+    function redirectToExercise(subtopicName) {
+        window.location.href = '/exersice?subtopic=' + encodeURIComponent(subtopicName);
+    }
+</script>
 </body>
 </html>
