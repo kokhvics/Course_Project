@@ -121,7 +121,9 @@ body {
 .variant-text-box{
     font-size: 40px;
     font-weight: bold;
-    color:#5D5A88
+    color:#5D5A88;
+    border: none;
+    background-color: transparent;
 }
 
 .variant-box-right{
@@ -232,4 +234,38 @@ body {
    color:#454363;
    text-align: center;
    white-space: pre-wrap;
+}
+.next-button-container {
+   box-sizing: border-box;
+   flex: 0 0 auto;
+   width: 355px;
+   height: 130px;
+   background-color: #DDEFB7;
+   border-radius: 18px;
+   box-shadow: 0px 14px 42px rgba(0, 0, 0, 0.2);
+   border: none;
+   justify-content: center;
+   align-items: center;
+   margin: 20px 130px 20px;
+}
+
+.variant-box-next{
+    width: 265px;
+    height: 185px;
+    border-radius: 40px;
+    background-color: #A1C7F4;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0px 14px 42px rgba(0, 0, 0, 0.2);
+    margin: 20px 20px;
+    border: none;
+}
+
+.variant-text-box-next{
+    font-size: 40px;
+    font-weight: bold;
+    color:#5D5A88;
+    border: none;
+    background-color: transparent;
 }

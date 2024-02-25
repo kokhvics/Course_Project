@@ -77,12 +77,6 @@ def home_page():
     else:
         return "Ошибка: Пользователь не найден или не указан год обучения."
 
-#нужно сделать так, чтобы в блоке заданий выводились названия только тех subtopic, которые соответсвуют году обучения
-
-#нужно завести массив или другую структуру данных, чтобы хранить а)количество заданий в этой теме, б)присваивать номеру
-#задания которе сейчас выполняется id задания из бд
-
-
 @app.route('/exersice')
 def exers_info():
     return render_template('exer_info.html')
@@ -142,7 +136,11 @@ def get_total_exercises(topic_name):
 
 @app.route('/exersice_start')
 def exers_num():
-    return render_template('the_exercise.html')
+    return render_template('the_exercise.html')\
+
+@app.route('/exersice_next')
+def exers_next():
+    return render_template('exer_vars_next.html')
 
 
 if __name__ == '__main__':
