@@ -12,7 +12,7 @@
         <p class="main-title-text-style" id="topicName">Тема задания</p>
         <div class="task-info-container" >
             <p class="task-count-display-style1">Количество заданий</p>
-            <p class="task-count-display-style" id="taskCount" data-task-count=""></p>
+            <p class="task-count-display-style" id="taskCount"></p>
         </div>
 
         <button class="start-button-container" id="startButton">
@@ -28,7 +28,7 @@
         var regex = new RegExp('[\\?&]' + name + '=([^&#]*)');
         var results = regex.exec(location.search);
         return results === null ? '' : decodeURIComponent(results[1].replace(/\+/g, ' '));
-    };
+    }
 
     // Получаем значение параметра "subtopic" из URL
     var subtopicName = getUrlParameter('subtopic');
@@ -41,42 +41,54 @@
 
     // Добавляем обработчик события на клик по кнопке "Начать"
     startButton.addEventListener('click', function() {
-        // Перенаправляем пользователя на страницу /exersice_start
-        window.location.href = '/exersice_start';
+        // Перенаправляем пользователя на страницу /exercise_start
+        window.location.href = '/exercise_start';
     });
 
+    // Функция для отправки названия темы на сервер
+    function sendTopicName(topicName) {
+        // Создаем объект XMLHttpRequest
+        var xhr = new XMLHttpRequest();
 
+        // Устанавливаем метод и URL для запроса
+        xhr.open('POST', '/process_topic', true);
 
-            // Функция для отправки названия темы на сервер
-            function sendTopicName(topicName) {
-                // Создаем объект XMLHttpRequest
-                var xhr = new XMLHttpRequest();
+        // Устанавливаем заголовок Content-Type для указания типа отправляемых данных
+        xhr.setRequestHeader('Content-Type', 'application/json');
 
-                // Устанавливаем метод и URL для запроса
-                xhr.open('POST', '/process_topic', true);
+        // Событие, срабатывающее при завершении запроса
+        xhr.onload = function() {
+            // Проверяем статус запроса
+            if (xhr.status === 200) {
+                // Действия в случае успешного ответа от сервера
+                var response = JSON.parse(xhr.responseText);
 
-                // Устанавливаем заголовок Content-Type для указания типа отправляемых данных
-                xhr.setRequestHeader('Content-Type', 'application/json');
+                // Получаем количество заданий из ответа сервера
+                var totalExercises = parseInt(response.totalExercises);
 
-                // Событие, срабатывающее при завершении запроса
-                xhr.onload = function() {
-                    // Проверяем статус запроса
-                    if (xhr.status === 200) {
-                        // Действия в случае успешного ответа от сервера
-                        console.log('Название темы успешно отправлено на сервер.');
-                    } else {
-                        // Действия в случае ошибки
-                        console.error('Произошла ошибка при отправке названия темы на сервер.');
-                    }
-                };
+                // Проверяем, является ли totalExercises числом
+                if (!isNaN(totalExercises)) {
+                    // Получаем элемент с id="taskCount"
+                    var taskCountElement = document.getElementById('taskCount');
 
-                // Преобразуем данные в формат JSON и отправляем
-                xhr.send(JSON.stringify({ topicName: topicName }));
+                    // Устанавливаем значение текстового содержимого равным значению totalExercises
+                    taskCountElement.textContent = totalExercises;
+                } else {
+                    console.error('Ошибка: значение totalExercises не является числом');
+                }
+            } else {
+                // Действия в случае ошибки
+                console.error('Произошла ошибка при отправке названия темы на сервер.');
             }
+        };
 
-            // Отправка AJAX-запроса на сервер Flask для передачи названия темы
-            sendTopicName(subtopicName);
+        // Преобразуем данные в формат JSON и отправляем
+        xhr.send(JSON.stringify({ topicName: topicName }));
+    }
 
+    // Вызываем функцию sendTopicName с параметром subtopicName
+    sendTopicName(subtopicName);
 </script>
+
 </body>
 </html>

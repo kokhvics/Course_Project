@@ -114,11 +114,8 @@ def process_topic():
         # Получаем количество заданий по заданной теме
         total_exercises = get_total_exercises(topic_name)
 
-        # Выводим количество заданий в консоль
-        print("Количество заданий по теме", topic_name, ":", total_exercises)
-
-        # Пример: вы можете вернуть обратно на клиент подтверждение успешной обработки
-        return jsonify({'message': 'Название темы успешно получено и обработано'}), 200
+        # Возвращаем количество заданий в формате JSON
+        return jsonify({'totalExercises': total_exercises}), 200
     else:
         # Если данные не в формате JSON, возвращаем ошибку
         return jsonify({'error': 'Неверный формат данных'}), 400

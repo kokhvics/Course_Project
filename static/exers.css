@@ -165,7 +165,7 @@ body {
 
 .info-container{
     width: 750px;
-    height: 441px;
+    height: 400px;
     background-color: #DFE7EA;
     border-radius: 50px;
     display: flex;
@@ -180,6 +180,8 @@ body {
    font-weight: bold;
    color:#454363;
    text-align: center;
+   margin-block-start: 10px;
+   margin-block-end: 10px;
 }
 .task-info-container {
    display: flex;
@@ -203,7 +205,6 @@ body {
 .task-count-display-style {
    box-sizing: border-box;
    flex: 1 0 65px;
-   padding-bottom: 3px;
    margin-left: 41px;
    font-size: 36px;
    font-weight: bold;
@@ -221,6 +222,7 @@ body {
    border-radius: 18px;
    box-shadow: 0px 14px 42px rgba(0, 0, 0, 0.2);
    border: none;
+   margin-block-start: 10px;
 }
 
 .intro-text-heading {
