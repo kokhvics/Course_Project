@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect, url_for
+from flask import Flask, render_template, request, redirect, url_for, jsonify
 import psycopg2
 import exer_work
 
@@ -47,11 +47,6 @@ def fetch_subtopics(login, password):
     conn.close()
     return subtopics
 
-# Получаем информацию о subtopic из базы данных
-#subtopics = fetch_subtopics(login, password)
-
-
-
 @app.route('/login', methods=['POST'])
 def login():
     login = request.form['login']
@@ -92,10 +87,6 @@ def home_page():
 def exers_info():
     return render_template('exer_info.html')
 
-@app.route('/exersice_start')
-def exers_num():
-    return render_template('the_exercise.html')
-
 @app.route('/exersice_text')
 def exers_txt():
     return render_template('exer_text.html')
@@ -107,6 +98,55 @@ def exers_txt_left():
 @app.route('/exersice_vars')
 def exers_vars():
     return render_template('exer_vars.html')
+
+
+# Маршрут для обработки POST-запросов на /process_topic
+@app.route('/process_topic', methods=['POST'])
+def process_topic():
+    # Проверяем, что запрос содержит данные в формате JSON
+    if request.is_json:
+        # Получаем JSON-данные из запроса
+        data = request.get_json()
+
+        # Извлекаем название темы из полученных данных
+        topic_name = data.get('topicName')
+
+        # Ваш код для дальнейшей обработки названия темы
+
+        # Пример: вы можете вернуть обратно на клиент подтверждение успешной обработки
+        return jsonify({'message': 'Название темы успешно получено и обработано'}), 200
+    else:
+        # Если данные не в формате JSON, возвращаем ошибку
+        return jsonify({'error': 'Неверный формат данных'}), 400
+
+
+# Функция для получения количества заданий по названию подтемы
+def get_task_count(subtopic_name):
+    conn = psycopg2.connect(**db_params)
+    cur = conn.cursor()
+
+    # Получаем ID подтемы по ее названию
+    cur.execute("SELECT id FROM subtopics WHERE name = %s", (subtopic_name,))
+    subtopic_id = cur.fetchone()[0]  # Получаем первый найденный ID
+
+    # Получаем количество заданий для данной подтемы
+    cur.execute("SELECT COUNT(*) FROM exercises_choose_ans WHERE fk_subtopic_id = %s", (subtopic_id,))
+    task_count = cur.fetchone()[0]  # Получаем количество заданий
+
+    cur.close()
+    conn.close()
+
+    return task_count
+
+@app.route('/get_task_count/<subtopic_name>')
+def get_task_count_route(subtopic_name):
+    task_count = get_task_count(subtopic_name)
+    return str(task_count)
+
+@app.route('/exersice_start')
+def exers_num():
+    return render_template('the_exercise.html')
+
 
 if __name__ == '__main__':
     app.run(debug=True)
