@@ -115,6 +115,7 @@ body {
     align-items: center;
     box-shadow: 0px 14px 42px rgba(0, 0, 0, 0.2);
     margin: 20px 20px;
+    border: none;
 }
 
 .variant-text-box{
@@ -133,6 +134,7 @@ body {
     align-items: center;
     box-shadow: 0px 14px 42px rgba(0, 0, 0, 0.2);
     margin: 20px 20px;
+    border: none;
 }
 .variant-box-wrong{
     width: 265px;
@@ -144,6 +146,7 @@ body {
     align-items: center;
     box-shadow: 0px 14px 42px rgba(0, 0, 0, 0.2);
     margin: 20px 20px;
+    border: none;
 }
 
 .fade-in {
