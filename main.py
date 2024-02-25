@@ -111,7 +111,11 @@ def process_topic():
         # Извлекаем название темы из полученных данных
         topic_name = data.get('topicName')
 
-        # Ваш код для дальнейшей обработки названия темы
+        # Получаем количество заданий по заданной теме
+        total_exercises = get_total_exercises(topic_name)
+
+        # Выводим количество заданий в консоль
+        print("Количество заданий по теме", topic_name, ":", total_exercises)
 
         # Пример: вы можете вернуть обратно на клиент подтверждение успешной обработки
         return jsonify({'message': 'Название темы успешно получено и обработано'}), 200
@@ -120,28 +124,24 @@ def process_topic():
         return jsonify({'error': 'Неверный формат данных'}), 400
 
 
-# Функция для получения количества заданий по названию подтемы
-def get_task_count(subtopic_name):
+def get_total_exercises(topic_name):
     conn = psycopg2.connect(**db_params)
-    cur = conn.cursor()
-
-    # Получаем ID подтемы по ее названию
-    cur.execute("SELECT id FROM subtopics WHERE name = %s", (subtopic_name,))
-    subtopic_id = cur.fetchone()[0]  # Получаем первый найденный ID
-
-    # Получаем количество заданий для данной подтемы
-    cur.execute("SELECT COUNT(*) FROM exercises_choose_ans WHERE fk_subtopic_id = %s", (subtopic_id,))
-    task_count = cur.fetchone()[0]  # Получаем количество заданий
-
-    cur.close()
+    cursor = conn.cursor()
+    sql_query = """
+    SELECT COUNT(*) AS total_exercises
+    FROM exercises_choose_ans
+    WHERE fk_subtopic_id = (SELECT subtopic_id FROM subtopics WHERE subtopic_name = %s)
+    """
+    # Выполняем запрос с использованием данных из запроса
+    cursor.execute(sql_query, (topic_name,))
+    # Получаем результат запроса
+    total_exercises = cursor.fetchone()[0]  # Получаем значение количества заданий
+    # Закрываем соединение с базой данных
+    cursor.close()
     conn.close()
+    return total_exercises
 
-    return task_count
 
-@app.route('/get_task_count/<subtopic_name>')
-def get_task_count_route(subtopic_name):
-    task_count = get_task_count(subtopic_name)
-    return str(task_count)
 
 @app.route('/exersice_start')
 def exers_num():
