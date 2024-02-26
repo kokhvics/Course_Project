@@ -45,7 +45,8 @@
             .then(data => {
                 // Обработка полученных данных - отображаем первое задание из списка
                 if (data.exercises.length > 0) {
-                    displayExercise(data.exercises[0]);
+                    // Используем функцию для отображения задания и переадресации
+                    displayExerciseAndRedirect(data.exercises[0]);
                 } else {
                     console.error('No exercises found for the topic:', topicName);
                 }
@@ -55,10 +56,16 @@
             });
         }
 
-        // Функция для отображения задания на странице
-        function displayExercise(exercise) {
+        // Функция для отображения задания на странице и перехода к следующей странице
+        function displayExerciseAndRedirect(exercise) {
             const exerciseContainer = document.getElementById('exercise-container');
             exerciseContainer.textContent = exercise; // Отображаем только одно задание
+
+            // JavaScript для автоматического перехода через 5 секунд с передачей параметра в URL
+            setTimeout(function() {
+                const nextUrl = '/exersice_text_left?exercise=' + encodeURIComponent(exercise);
+                window.location.href = nextUrl;
+            }, 2000);
         }
 
         // Пример вызова функции для получения задания по теме при загрузке страницы
@@ -66,14 +73,5 @@
             getExerciseByTopic(subtopicName);
         });
     </script>
-
-
-    <!--<script>
-        // JavaScript для автоматического перехода через 5 секунд
-        setTimeout(function() {
-            window.location.href = '/exersice_text_left';
-        }, 2000);
-    </script>
-</body>-->
 </body>
 </html>
