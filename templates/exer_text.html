@@ -15,63 +15,65 @@
                 <div class="empty-circle-top"></div>
             </div>
             <div class="bottom-rectangle" style="display: flex; flex-direction: column;">
-                <div class="text-box">{{ exercise_content }}</div>
+                <div class="text-box" id="exercise-container"></div>
             </div>
             <!-- -->
         </div>
     </div>
     <script>
-                // Функция для извлечения параметра из URL
-            function getUrlParameter(name) {
-                name = name.replace(/[\[]/, '\\[').replace(/[\]]/, '\\]');
-                var regex = new RegExp('[\\?&]' + name + '=([^&#]*)');
-                var results = regex.exec(location.search);
-                return results === null ? '' : decodeURIComponent(results[1].replace(/\+/g, ' '));
-            }
+        // Функция для извлечения параметра из URL
+        function getUrlParameter(name) {
+            name = name.replace(/[\[]/, '\\[').replace(/[\]]/, '\\]');
+            var regex = new RegExp('[\\?&]' + name + '=([^&#]*)');
+            var results = regex.exec(location.search);
+            return results === null ? '' : decodeURIComponent(results[1].replace(/\+/g, ' '));
+        }
 
-            // Получаем значение параметра "subtopic" из URL
-            var subtopicName = getUrlParameter('subtopic');
+        // Получаем значение параметра "subtopic" из URL
+        var subtopicName = getUrlParameter('subtopic');
 
-            // Функция для отправки запроса на получение заданий по теме
-            function getExercisesByTopic(topicName) {
-                fetch('/get_exercises', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({ topicName: topicName }),
-                })
-                .then(response => response.json())
-                .then(data => {
-                    // Обработка полученных данных
-                    displayExercises(data.exercises);
-                })
-                .catch(error => {
-                    console.error('Error:', error);
-                });
-            }
-
-            // Функция для отображения заданий на странице
-            function displayExercises(exercises) {
-                const exerciseContainer = document.getElementById('exercise-container');
-                exerciseContainer.innerHTML = ''; // Очистка контейнера перед отображением новых заданий
-                exercises.forEach(exercise => {
-                    const exerciseDiv = document.createElement('div');
-                    exerciseDiv.textContent = exercise;
-                    exerciseContainer.appendChild(exerciseDiv);
-                });
-            }
-
-            // Пример вызова функции для получения заданий по теме при загрузке страницы
-            document.addEventListener('DOMContentLoaded', function() {
-                getExercisesByTopic(topicName);
+        // Функция для отправки запроса на получение задания по теме
+        function getExerciseByTopic(topicName) {
+            fetch('/get_exercises', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ topicName: topicName }),
+            })
+            .then(response => response.json())
+            .then(data => {
+                // Обработка полученных данных - отображаем первое задание из списка
+                if (data.exercises.length > 0) {
+                    displayExercise(data.exercises[0]);
+                } else {
+                    console.error('No exercises found for the topic:', topicName);
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
             });
+        }
+
+        // Функция для отображения задания на странице
+        function displayExercise(exercise) {
+            const exerciseContainer = document.getElementById('exercise-container');
+            exerciseContainer.textContent = exercise; // Отображаем только одно задание
+        }
+
+        // Пример вызова функции для получения задания по теме при загрузке страницы
+        document.addEventListener('DOMContentLoaded', function() {
+            getExerciseByTopic(subtopicName);
+        });
     </script>
+
+
     <!--<script>
         // JavaScript для автоматического перехода через 5 секунд
         setTimeout(function() {
             window.location.href = '/exersice_text_left';
         }, 2000);
-    </script>-->
+    </script>
+</body>-->
 </body>
 </html>
