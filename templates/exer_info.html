@@ -41,8 +41,8 @@
 
     // Добавляем обработчик события на клик по кнопке "Начать"
     startButton.addEventListener('click', function() {
-        // Перенаправляем пользователя на страницу /exercise_start
-        window.location.href = '/exercise_start';
+        // Перенаправляем пользователя на страницу /exersice_start с передачей названия темы в URL
+        window.location.href = '/exersice_start?subtopic=' + encodeURIComponent(subtopicName);
     });
 
     // Функция для отправки названия темы на сервер

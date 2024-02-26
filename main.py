@@ -81,17 +81,7 @@ def home_page():
 def exers_info():
     return render_template('exer_info.html')
 
-@app.route('/exersice_text')
-def exers_txt():
-    return render_template('exer_text.html')
 
-@app.route('/exersice_text_left')
-def exers_txt_left():
-    return render_template('exer_text_left.html')
-
-@app.route('/exersice_vars')
-def exers_vars():
-    return render_template('exer_vars.html')
 
 
 # Маршрут для обработки POST-запросов на /process_topic
@@ -133,10 +123,46 @@ def get_total_exercises(topic_name):
     return total_exercises
 
 
+@app.route('/get_exercises', methods=['POST'])
+def get_exercises():
+    if request.is_json:
+        data = request.get_json()
+        topic_name = data.get('topicName')
+        exercises = retrieve_exercises(topic_name)
+        return jsonify({'exercises': exercises}), 200
+    else:
+        return jsonify({'error': 'Неверный формат данных'}), 400
+
+
+def retrieve_exercises(topic_name):
+    conn = psycopg2.connect(**db_params)
+    cursor = conn.cursor()
+    sql_query = """
+    SELECT exr_content
+    FROM exercises_choose_ans
+    WHERE fk_subtopic_id = (SELECT subtopic_id FROM subtopics WHERE subtopic_name = %s)
+    """
+    cursor.execute(sql_query, (topic_name,))
+    exercises = cursor.fetchall()  # Получаем все задания по заданной теме
+    cursor.close()
+    conn.close()
+    return [exercise[0] for exercise in exercises]  # Возвращаем список текстов заданий
 
 @app.route('/exersice_start')
 def exers_num():
-    return render_template('the_exercise.html')\
+    return render_template('the_exercise.html')
+
+@app.route('/exersice_text')
+def exers_txt():
+    return render_template('exer_text.html')
+
+@app.route('/exersice_text_left')
+def exers_txt_left():
+    return render_template('exer_text_left.html')
+
+@app.route('/exersice_vars')
+def exers_vars():
+    return render_template('exer_vars.html')
 
 @app.route('/exersice_next')
 def exers_next():
