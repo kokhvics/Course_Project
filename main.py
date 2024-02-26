@@ -160,11 +160,11 @@ def exers_txt():
 def exers_txt_left():
     return render_template('exer_text_left.html')
 
-@app.route('/exersice_vars')
+@app.route('/exer_vars')
 def exers_vars():
     return render_template('exer_vars.html')
 
-@app.route('/exersice_next')
+@app.route('/exer_next')
 def exers_next():
     return render_template('exer_vars_next.html')
 

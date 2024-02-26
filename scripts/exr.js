@@ -1,45 +1,4 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Smarty</title>
-    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='exers.css') }}">
-</head>
-<body>
-<div class="container fade-in">
-    <div style="display: flex; flex-direction: column;">
-        <div class="top-rectangle" style="display: flex; flex-direction: row;">
-            <div class="empty-place"></div>
-            <div class="empty-circle-top"></div>
-            <div class="empty-circle-top"></div>
-            <div class="empty-circle-top"></div>
-        </div>
-        <div style="display: flex; justify-content: center; align-items: center;">
-            <div class="left-bottom-rectangle" style="margin-right: 20px; display: flex; flex-flow: column wrap;">
-                <div class="left-text-box" id="exercise-container"></div>
-            </div>
-            <div style="display: flex; flex-direction: column;">
-                <div style="display: flex; flex-direction: row;">
-                    <button class="variant-box">
-                        <div class="variant-text-box">7809876</div>
-                    </button>
-                    <button class="variant-box">
-                        <div class="variant-text-box">225425</div>
-                    </button>
-                </div>
-                <div style="display: flex; flex-direction: row;">
-                    <button class="variant-box">
-                        <div class="variant-text-box">727427</div>
-                    </button>
-                    <button class="variant-box">
-                        <div class="variant-text-box">439595</div>
-                    </button>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-<script>
+
         // Функция для извлечения параметра из URL
         function getUrlParameter(name) {
             name = name.replace(/[\[]/, '\\[').replace(/[\]]/, '\\]');
@@ -100,12 +59,7 @@
 
             // JavaScript для автоматического перехода через 5 секунд с передачей параметра в URL
             setTimeout(function() {
-                const nextUrl = '/exersice_next?exercise=' + encodeURIComponent(exercise); // Исправлен адрес URL
+                const nextUrl = '/exersice_vars?exercise=' + encodeURIComponent(exercise); // Исправлен адрес URL
                 window.location.href = nextUrl;
-            }, 2000);
+            }, 5000);
         }
-</script>
-
-
-</body>
-</html>
