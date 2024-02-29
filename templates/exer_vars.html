@@ -50,83 +50,66 @@
 </style>
 
 <script>
-
-    // Получаем параметр exercise из URL
     const urlParams = new URLSearchParams(window.location.search);
-    // Получаем параметр exercise из URL и декодируем его
     const exercise = decodeURIComponent(urlParams.get('exercise'));
-    console.log(exercise);
 
-    // Отображаем текст задания в блоке 'exercise-container'
     document.getElementById('exercise-container').textContent = exercise;
 
-    // Функция для загрузки вариантов ответов
     function loadExerciseVariants() {
-        // Выполняем запрос к базе данных для получения текста задания и вариантов ответов
         fetch('/retrieve_exercises_with_answers?exr_text=' + encodeURIComponent(exercise))
             .then(response => response.json())
             .then(data => {
-                // Заполняем блоки вариантов ответов соответствующими значениями
-                document.getElementById('variant-1').textContent = data[0][1]; // exr_ans_1
-                document.getElementById('variant-1').setAttribute('data-answer', data[0][1]); // Устанавливаем атрибут data-answer для хранения ответа
-                document.getElementById('variant-2').textContent = data[0][2]; // exr_ans_2
-                document.getElementById('variant-2').setAttribute('data-answer', data[0][2]); // Устанавливаем атрибут data-answer для хранения ответа
-                document.getElementById('variant-3').textContent = data[0][3]; // exr_ans_3
-                document.getElementById('variant-3').setAttribute('data-answer', data[0][3]); // Устанавливаем атрибут data-answer для хранения ответа
-                document.getElementById('variant-4').textContent = data[0][4]; // exr_ans_4
-                document.getElementById('variant-4').setAttribute('data-answer', data[0][4]); // Устанавливаем атрибут data-answer для хранения ответа
+                const variants = [
+                    'variant-1', 'variant-2', 'variant-3', 'variant-4'
+                ];
+
+                variants.forEach((variant, index) => {
+                    const variantElement = document.getElementById(variant);
+                    variantElement.textContent = data[0][index + 1];
+                    variantElement.setAttribute('data-answer', data[0][5]);
+
+                    const boxElement = document.getElementById('var-box-' + (index + 1));
+                    boxElement.addEventListener('click', () => checkAnswer(variantElement));
+                });
             })
             .catch(error => console.error('Ошибка загрузки вариантов ответов:', error));
     }
 
-    // Вызываем функцию загрузки вариантов ответов
     loadExerciseVariants();
 
-   // Функция для извлечения и вывода правильного ответа в консоль
-    function logCorrectAnswer(exerciseText) {
-        return fetch('/retrieve_exercises_with_answers?exr_text=' + encodeURIComponent(exerciseText))
-            .then(response => response.json())
-            .then(data => {
-                const correctAnswer = data[0][5]; // exr_right_ans
-                console.log('Правильный ответ:', correctAnswer);
-                return correctAnswer; // Возвращаем правильный ответ
-            })
-            .catch(error => {
-                console.error('Ошибка получения правильного ответа:', error);
-                return null; // В случае ошибки возвращаем null
-            });
+    function changeColor(element, isCorrect) {
+        const boxElement = element.parentElement; // Получаем родительский элемент (var-box)
+        if (isCorrect) {
+            boxElement.style.backgroundColor = "#DDEFB7";
+        } else {
+            boxElement.style.backgroundColor = "#F4A1A5";
+        }
     }
 
-        // Вызываем функцию для извлечения и вывода правильного ответа
-        logCorrectAnswer(exercise);
+    function checkAnswer(element) {
+        const selectedAnswer = element.textContent;
+        const correctAnswer = element.getAttribute('data-answer');
+        console.log('Выбранный ответ:', selectedAnswer);
+        console.log('Правильный ответ:', correctAnswer);
 
-        // Функция для проверки ответа
-        function checkAnswer(event) {
-            const selectedAnswer = event.target.textContent;
-            logCorrectAnswer(exercise).then(correctAnswer => {
-                console.log('Выбранный ответ:', selectedAnswer);
-                console.log('Правильный ответ:', correctAnswer);
+        const isCorrect = selectedAnswer === correctAnswer;
 
-                const isCorrect = selectedAnswer === correctAnswer;
+        changeColor(element, isCorrect);
 
-                if (isCorrect) {
-                    event.target.classList.toggle('correct', true); // Добавляем класс 'correct', чтобы поменять цвет фона на зеленый
-                } else {
-                    event.target.classList.toggle('incorrect', true); // Добавляем класс 'incorrect', чтобы поменять цвет фона на красный
-                }
-                // Удаляем обработчики событий, чтобы пользователь не мог изменить ответ после выбора
-                document.getElementById('var-box-1').removeEventListener('click', checkAnswer);
-                document.getElementById('var-box-2').removeEventListener('click', checkAnswer);
-                document.getElementById('var-box-3').removeEventListener('click', checkAnswer);
-                document.getElementById('var-box-4').removeEventListener('click', checkAnswer);
-            });
-        }
+        // Удаляем обработчики событий для всех вариантов после выбора ответа
+        const variants = [
+            'variant-1', 'variant-2', 'variant-3', 'variant-4'
+        ];
 
-        // Обработчики событий для кнопок
-        document.getElementById('var-box-1').addEventListener('click', checkAnswer);
-        document.getElementById('var-box-2').addEventListener('click', checkAnswer);
-        document.getElementById('var-box-3').addEventListener('click', checkAnswer);
-        document.getElementById('var-box-4').addEventListener('click', checkAnswer);
+        variants.forEach(variant => {
+            const variantElement = document.getElementById(variant);
+            variantElement.removeEventListener('click', () => checkAnswer(variantElement));
+
+            const boxElement = document.getElementById('var-box-' + (variants.indexOf(variant) + 1));
+            boxElement.removeEventListener('click', () => checkAnswer(variantElement));
+        });
+
+    }
 
 </script>
 
