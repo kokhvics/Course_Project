@@ -148,6 +148,38 @@ def retrieve_exercises(topic_name):
     conn.close()
     return [exercise[0] for exercise in exercises]  # Возвращаем список текстов заданий
 
+
+def retrieve_exercises_with_answers(exr_text):
+    conn = psycopg2.connect(**db_params)
+    cursor = conn.cursor()
+    sql_query = """
+    SELECT exr_content, exr_ans_1, exr_ans_2, exr_ans_3, exr_ans_4, exr_right_ans
+    FROM exercises_choose_ans
+    WHERE exr_content = %s
+    """
+    cursor.execute(sql_query, (exr_text,))
+    exercises = cursor.fetchall()  # Получаем все задания по заданной теме
+    cursor.close()
+    conn.close()
+    return exercises  # Возвращаем список кортежей с текстом задания и ответами
+
+@app.route('/retrieve_exercises_with_answers', methods=['GET'])
+def load_exercises_with_answers():
+    exr_text = request.args.get('exr_text')
+    exercises = retrieve_exercises_with_answers(exr_text)
+    return jsonify(exercises)
+
+@app.route('/get_exercise_and_answers', methods=['POST']) #пока что не используется, возможно необходимо удалить
+def get_exercise_and_answers():
+    data = request.get_json()
+    exercise_text = data.get('exerciseText')
+
+    # Вызываем вашу функцию для получения задания и ответов
+    exercises_with_answers = retrieve_exercises_with_answers(exercise_text)
+
+    # Отправляем ответ в формате JSON
+    return jsonify({'exercise': exercises_with_answers[0] if exercises_with_answers else None})
+
 @app.route('/exersice_start')
 def exers_num():
     return render_template('the_exercise.html')

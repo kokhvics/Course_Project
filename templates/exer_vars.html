@@ -21,18 +21,18 @@
             <div style="display: flex; flex-direction: column;">
                 <div style="display: flex; flex-direction: row;">
                     <button class="variant-box">
-                        <div class="variant-text-box">7809876</div>
+                        <div class="variant-text-box" id="variant-1"></div>
                     </button>
                     <button class="variant-box">
-                        <div class="variant-text-box">225425</div>
+                        <div class="variant-text-box" id="variant-2"></div>
                     </button>
                 </div>
                 <div style="display: flex; flex-direction: row;">
                     <button class="variant-box">
-                        <div class="variant-text-box">727427</div>
+                        <div class="variant-text-box" id="variant-3"></div>
                     </button>
                     <button class="variant-box">
-                        <div class="variant-text-box">439595</div>
+                        <div class="variant-text-box" id="variant-4"></div>
                     </button>
                 </div>
             </div>
@@ -40,72 +40,35 @@
     </div>
 </div>
 <script>
-        // Функция для извлечения параметра из URL
-        function getUrlParameter(name) {
-            name = name.replace(/[\[]/, '\\[').replace(/[\]]/, '\\]');
-            var regex = new RegExp('[\\?&]' + name + '=([^&#]*)');
-            var results = regex.exec(location.search);
-            return results === null ? '' : decodeURIComponent(results[1].replace(/\+/g, ' '));
-        }
 
-        // Получаем значение параметра "subtopic" из URL
-        var subtopicName = getUrlParameter('subtopic');
+    // Получаем параметр exercise из URL
+    const urlParams = new URLSearchParams(window.location.search);
+    // Получаем параметр exercise из URL и декодируем его
+    const exercise = decodeURIComponent(urlParams.get('exercise'));
+    console.log(exercise);
 
-        // Функция для отправки запроса на получение задания по теме
-        function getExerciseByTopic(topicName) {
-            fetch('/get_exercises', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({ topicName: topicName }),
-            })
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error('Network response was not ok');
-                }
-                return response.json();
-            })
+    // Отображаем текст задания в блоке 'exercise-container'
+    document.getElementById('exercise-container').textContent = exercise;
+
+    // Функция для загрузки вариантов ответов
+    function loadExerciseVariants() {
+        // Выполняем запрос к базе данных для получения текста задания и вариантов ответов
+        fetch('/retrieve_exercises_with_answers?exr_text=' + encodeURIComponent(exercise))
+            .then(response => response.json())
             .then(data => {
-                // Обработка полученных данных - отображаем первое задание из списка
-                if (data.exercises.length > 0) {
-                    // Используем функцию для отображения задания и переадресации
-                    displayExerciseAndRedirect(data.exercises[0]);
-                } else {
-                    console.error('No exercises found for the topic:', topicName);
-                }
+                // Заполняем блоки вариантов ответов соответствующими значениями
+                document.getElementById('variant-1').textContent = data[0][1]; // exr_ans_1
+                document.getElementById('variant-2').textContent = data[0][2]; // exr_ans_2
+                document.getElementById('variant-3').textContent = data[0][3]; // exr_ans_3
+                document.getElementById('variant-4').textContent = data[0][4]; // exr_ans_4
             })
-            .catch(error => {
-                console.error('Error:', error);
-            });
-        }
-        // Пример вызова функции для получения задания по теме при загрузке страницы
-            document.addEventListener('DOMContentLoaded', function() {
-                getExerciseByTopic(subtopicName);
-            });
-             document.addEventListener('DOMContentLoaded', function() {
-                // Извлекаем значение параметра из URL
-                const urlParams = new URLSearchParams(window.location.search);
-                const exerciseText = urlParams.get('exercise');
+            .catch(error => console.error('Ошибка загрузки вариантов ответов:', error));
+    }
 
-                // Отображаем текст задания в блоке
-                const exerciseContainer = document.getElementById('exercise-container');
-                exerciseContainer.textContent = exerciseText;
-             });
+    // Вызываем функцию загрузки вариантов ответов
+    loadExerciseVariants();
 
-        // Функция для отображения задания на странице и перехода к следующей странице
-        function displayExerciseAndRedirect(exercise) {
-            const exerciseContainer = document.getElementById('exercise-container');
-            exerciseContainer.textContent = exercise; // Отображаем только одно задание
-
-            // JavaScript для автоматического перехода через 5 секунд с передачей параметра в URL
-            setTimeout(function() {
-                const nextUrl = '/exersice_next?exercise=' + encodeURIComponent(exercise); // Исправлен адрес URL
-                window.location.href = nextUrl;
-            }, 2000);
-        }
 </script>
-
 
 </body>
 </html>
