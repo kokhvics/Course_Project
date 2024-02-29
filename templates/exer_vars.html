@@ -55,6 +55,8 @@
 
     document.getElementById('exercise-container').textContent = exercise;
 
+    let answerSelected = false;
+
     function loadExerciseVariants() {
         fetch('/retrieve_exercises_with_answers?exr_text=' + encodeURIComponent(exercise))
             .then(response => response.json())
@@ -69,7 +71,7 @@
                     variantElement.setAttribute('data-answer', data[0][5]);
 
                     const boxElement = document.getElementById('var-box-' + (index + 1));
-                    boxElement.addEventListener('click', () => checkAnswer(variantElement));
+                    boxElement.addEventListener('click', () => checkAnswer(variantElement, boxElement));
                 });
             })
             .catch(error => console.error('Ошибка загрузки вариантов ответов:', error));
@@ -86,7 +88,9 @@
         }
     }
 
-    function checkAnswer(element) {
+    function checkAnswer(element, boxElement) {
+        if (answerSelected) return; // Если ответ уже выбран, ничего не делаем
+
         const selectedAnswer = element.textContent;
         const correctAnswer = element.getAttribute('data-answer');
         console.log('Выбранный ответ:', selectedAnswer);
@@ -95,22 +99,19 @@
         const isCorrect = selectedAnswer === correctAnswer;
 
         changeColor(element, isCorrect);
+        answerSelected = true; // Устанавливаем флаг, что ответ выбран
 
-        // Удаляем обработчики событий для всех вариантов после выбора ответа
+        // Блокируем дальнейшие клики на другие варианты ответов
         const variants = [
             'variant-1', 'variant-2', 'variant-3', 'variant-4'
         ];
 
         variants.forEach(variant => {
             const variantElement = document.getElementById(variant);
-            variantElement.removeEventListener('click', () => checkAnswer(variantElement));
-
             const boxElement = document.getElementById('var-box-' + (variants.indexOf(variant) + 1));
-            boxElement.removeEventListener('click', () => checkAnswer(variantElement));
+            variantElement.removeEventListener('click', () => checkAnswer(variantElement, boxElement));
         });
-
     }
-
 </script>
 
 </body>
