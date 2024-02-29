@@ -20,18 +20,18 @@
             </div>
             <div style="display: flex; flex-direction: column;">
                 <div style="display: flex; flex-direction: row;">
-                    <button class="variant-box">
+                    <button class="variant-box" id="var-box-1">
                         <div class="variant-text-box" id="variant-1"></div>
                     </button>
-                    <button class="variant-box">
+                    <button class="variant-box" id="var-box-2">
                         <div class="variant-text-box" id="variant-2"></div>
                     </button>
                 </div>
                 <div style="display: flex; flex-direction: row;">
-                    <button class="variant-box">
+                    <button class="variant-box" id="var-box-3">
                         <div class="variant-text-box" id="variant-3"></div>
                     </button>
-                    <button class="variant-box">
+                    <button class="variant-box" id="var-box-4">
                         <div class="variant-text-box" id="variant-4"></div>
                     </button>
                 </div>
@@ -39,6 +39,16 @@
         </div>
     </div>
 </div>
+<style>
+    .correct {
+        background-color: #DDEFB7;
+    }
+
+    .incorrect {
+        background-color: #F4A1A5;
+    }
+</style>
+
 <script>
 
     // Получаем параметр exercise из URL
@@ -58,15 +68,65 @@
             .then(data => {
                 // Заполняем блоки вариантов ответов соответствующими значениями
                 document.getElementById('variant-1').textContent = data[0][1]; // exr_ans_1
+                document.getElementById('variant-1').setAttribute('data-answer', data[0][1]); // Устанавливаем атрибут data-answer для хранения ответа
                 document.getElementById('variant-2').textContent = data[0][2]; // exr_ans_2
+                document.getElementById('variant-2').setAttribute('data-answer', data[0][2]); // Устанавливаем атрибут data-answer для хранения ответа
                 document.getElementById('variant-3').textContent = data[0][3]; // exr_ans_3
+                document.getElementById('variant-3').setAttribute('data-answer', data[0][3]); // Устанавливаем атрибут data-answer для хранения ответа
                 document.getElementById('variant-4').textContent = data[0][4]; // exr_ans_4
+                document.getElementById('variant-4').setAttribute('data-answer', data[0][4]); // Устанавливаем атрибут data-answer для хранения ответа
             })
             .catch(error => console.error('Ошибка загрузки вариантов ответов:', error));
     }
 
     // Вызываем функцию загрузки вариантов ответов
     loadExerciseVariants();
+
+   // Функция для извлечения и вывода правильного ответа в консоль
+    function logCorrectAnswer(exerciseText) {
+        return fetch('/retrieve_exercises_with_answers?exr_text=' + encodeURIComponent(exerciseText))
+            .then(response => response.json())
+            .then(data => {
+                const correctAnswer = data[0][5]; // exr_right_ans
+                console.log('Правильный ответ:', correctAnswer);
+                return correctAnswer; // Возвращаем правильный ответ
+            })
+            .catch(error => {
+                console.error('Ошибка получения правильного ответа:', error);
+                return null; // В случае ошибки возвращаем null
+            });
+    }
+
+        // Вызываем функцию для извлечения и вывода правильного ответа
+        logCorrectAnswer(exercise);
+
+        // Функция для проверки ответа
+        function checkAnswer(event) {
+            const selectedAnswer = event.target.textContent;
+            logCorrectAnswer(exercise).then(correctAnswer => {
+                console.log('Выбранный ответ:', selectedAnswer);
+                console.log('Правильный ответ:', correctAnswer);
+
+                const isCorrect = selectedAnswer === correctAnswer;
+
+                if (isCorrect) {
+                    event.target.classList.toggle('correct', true); // Добавляем класс 'correct', чтобы поменять цвет фона на зеленый
+                } else {
+                    event.target.classList.toggle('incorrect', true); // Добавляем класс 'incorrect', чтобы поменять цвет фона на красный
+                }
+                // Удаляем обработчики событий, чтобы пользователь не мог изменить ответ после выбора
+                document.getElementById('var-box-1').removeEventListener('click', checkAnswer);
+                document.getElementById('var-box-2').removeEventListener('click', checkAnswer);
+                document.getElementById('var-box-3').removeEventListener('click', checkAnswer);
+                document.getElementById('var-box-4').removeEventListener('click', checkAnswer);
+            });
+        }
+
+        // Обработчики событий для кнопок
+        document.getElementById('var-box-1').addEventListener('click', checkAnswer);
+        document.getElementById('var-box-2').addEventListener('click', checkAnswer);
+        document.getElementById('var-box-3').addEventListener('click', checkAnswer);
+        document.getElementById('var-box-4').addEventListener('click', checkAnswer);
 
 </script>
 
