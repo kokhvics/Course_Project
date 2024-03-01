@@ -18,7 +18,7 @@
             <div class="left-bottom-rectangle" style="margin-right: 20px; display: flex; flex-flow: column wrap;">
                 <div class="left-text-box" id="exercise-container"></div>
             </div>
-            <div style="display: flex; flex-direction: column;">
+            <div style="display: flex; flex-direction: column;" id="var-box-container">
                 <div style="display: flex; flex-direction: row;">
                     <button class="variant-box" id="var-box-1">
                         <div class="variant-text-box" id="variant-1"></div>
@@ -88,6 +88,8 @@
         }
     }
 
+
+
     function checkAnswer(element, boxElement) {
         if (answerSelected) return; // Если ответ уже выбран, ничего не делаем
 
@@ -111,7 +113,50 @@
             const boxElement = document.getElementById('var-box-' + (variants.indexOf(variant) + 1));
             variantElement.removeEventListener('click', () => checkAnswer(variantElement, boxElement));
         });
+
+        // Получаем доступ к элементам .variant-box
+        const variantBoxes = document.querySelectorAll('.variant-box');
+
+        // Задержка перед уменьшением размера блоков (в миллисекундах)
+        const delay = 1000; // Например, 1000 мс = 1 секунда
+
+        // Уменьшаем размер блоков через заданную задержку
+        setTimeout(() => {
+            variantBoxes.forEach(box => {
+                box.style.width = '265px'; // Уменьшаем ширину блока
+                box.style.height = '185px'; // Уменьшаем высоту блока
+            });
+                // Находим контейнер по идентификатору
+                const container = document.getElementById('var-box-container');
+
+                // Создаем кнопку "Далее"
+                const nextButtonContainer = document.createElement('div');
+                nextButtonContainer.classList.add('next-button-container');
+
+                const nextButton = document.createElement('button');
+                nextButton.innerHTML = '<div class="variant-text-box-next">Далее</div>';
+
+                nextButtonContainer.appendChild(nextButton);
+
+                // Находим все элементы с классом "var-box"
+                const varBoxes = container.querySelectorAll('.var-box');
+
+                // Получаем последний элемент с классом "var-box"
+                const lastVarBox = varBoxes[varBoxes.length - 1];
+
+                // Вставляем кнопку "Далее" после последнего элемента с классом "var-box"
+                if (lastVarBox) {
+                    lastVarBox.parentNode.insertBefore(nextButtonContainer, lastVarBox.nextSibling);
+                } else {
+                    // Если нет элементов с классом "var-box", просто добавляем кнопку в конец контейнера
+                    container.appendChild(nextButtonContainer);
+                }
+        }, delay);
+
+
     }
+
+
 </script>
 
 </body>

@@ -27,6 +27,7 @@ body {
     font-size: 200px;
     font-weight: bold;
     color:#5D5A88
+    margin-top: 0;
     margin: 0; /* Убирает внутренние отступы h1 */
 }
 
