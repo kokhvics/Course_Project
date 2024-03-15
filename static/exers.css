@@ -17,7 +17,9 @@ body {
     box-sizing: border-box;
     width: 457px;
     height: 303px;
-    margin: auto; /* Добавлено для центрирования по горизонтали */
+    padding: 0;
+    margin-top: 0;
+    margin: 0; /* Добавлено для центрирования по горизонтали */
     margin-top: 50vh;
     transform: translateY(-50%);
     text-align: center;
@@ -26,7 +28,7 @@ body {
 .container h1 {
     font-size: 200px;
     font-weight: bold;
-    color:#5D5A88
+    color:#5D5A88;
     margin-top: 0;
     margin: 0; /* Убирает внутренние отступы h1 */
 }
