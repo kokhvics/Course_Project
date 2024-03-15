@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Smarty</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='exers.css') }}">
+
+
+</head>
+<body>
+
+<div style="display: flex; flex-direction: column;">
+    <div class="info-container">
+        <p class="main-title-text-style">Поздравляем!</p>
+        <p class="main-title-text-style">Вы выполнили все задания!</p>
+
+        <button class="start-button-container" id="BackButton">
+            <p class="intro-text-heading">На главную</p>
+        </button>
+    </div>
+</div>
+
+<script>
+    // Находим кнопку по её ID
+    var BackButton = document.getElementById('BackButton');
+
+    // Добавляем обработчик события на клик по кнопке "На главную"
+    BackButton.addEventListener('click', function() {
+        // Перенаправляем пользователя на страницу /home
+        window.location.href = '/home?login={{ session["user_name"] }}&password={{ session["year_of_study"] }}';
+    });
+</script>
+
+</body>
+</html>

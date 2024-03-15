@@ -1,8 +1,9 @@
-from flask import Flask, render_template, request, redirect, url_for, jsonify
+from flask import Flask, render_template, request, redirect, url_for, jsonify, session
 import psycopg2
 import exer_work
 
 app = Flask(__name__)
+app.secret_key = 'your_secret_key'
 
 # Параметры подключения к базе данных PostgreSQL
 db_params = {
@@ -54,28 +55,33 @@ def login():
 
     # Проверка наличия пользователя в базе данных
     if get_user_name(login, password):
-        return redirect(url_for('home_page', login=login, password=password))
+        session['login'] = login
+        session['password'] = password
+        return redirect(url_for('home_page'))
     else:
         return "Ошибка: неверный логин или пароль"
 
 @app.route('/home')
 def home_page():
-    login = request.args.get('login')
-    password = request.args.get('password')
+    if 'login' in session and 'password' in session:
+        login = session['login']
+        password = session['password']
 
-    subtopics = fetch_subtopics(login, password)
+        subtopics = fetch_subtopics(login, password)
 
-    # Получение URL из базы данных
-    conn = psycopg2.connect(**db_params)
-    cur = conn.cursor()
-    cur.execute("SELECT url FROM students WHERE st_login = %s AND st_password = %s", (login, password))
-    image_url = cur.fetchone()[0]
-    conn.close()
+        # Получение URL из базы данных
+        conn = psycopg2.connect(**db_params)
+        cur = conn.cursor()
+        cur.execute("SELECT url FROM students WHERE st_login = %s AND st_password = %s", (login, password))
+        image_url = cur.fetchone()[0]
+        conn.close()
 
-    if subtopics:
-        return render_template('Home page.html', user_name=login, subtopics=subtopics, image_url=image_url)
+        if subtopics:
+            return render_template('Home page.html', user_name=login, subtopics=subtopics, image_url=image_url)
+        else:
+            return "Ошибка: Пользователь не найден или не указан год обучения."
     else:
-        return "Ошибка: Пользователь не найден или не указан год обучения."
+        return redirect(url_for('login'))
 
 @app.route('/exersice')
 def exers_info():
@@ -211,6 +217,8 @@ def retrieve_next_exercise(exercise):
 
 
 
+
+
 @app.route('/exersices')
 def list_of_exers():
     return render_template('list_of_exer.html')
@@ -240,7 +248,11 @@ def exers_vars():
 
 @app.route('/exer_next')
 def exers_next():
-    return render_template('exer_vars_next.html')
+    return render_template('exer_vars_next.html')\
+
+@app.route('/last_page')
+def congratulations():
+        return render_template('last_ex_page.html')
 
 
 if __name__ == '__main__':

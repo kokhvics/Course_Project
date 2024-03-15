@@ -161,10 +161,19 @@
                     })
                     .then(response => response.json())
                     .then(data => {
-                        // Перенаправляем пользователя на страницу /exersice_start с полученным значением в URL
-                        window.location.href = '/exersice_continuation?nextExercise=' + encodeURIComponent(data.nextExercise);
+                        if (data.nextExercise) {
+                            // Перенаправляем пользователя на страницу /exersice_continuation с полученным значением в URL
+                            window.location.href = '/exersice_continuation?nextExercise=' + encodeURIComponent(data.nextExercise);
+                        } else {
+                            // Если больше нет заданий по запросу, перенаправляем на страницу /last_page
+                            window.location.href = '/last_page';
+                        }
                     })
-                    .catch(error => console.error('Error sending exercise:', error));
+                    .catch(error => {
+                        console.error('Error sending exercise:', error);
+                        // Перенаправляем на страницу /last_page в случае ошибки
+                        window.location.href = '/last_page';
+                    });
 
                 });
         }, delay);

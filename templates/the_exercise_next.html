@@ -4,12 +4,13 @@
     <meta charset="UTF-8">
     <title>Smarty - Задание #</title> <!-- нужно вместо # чтобы выводился номер задания которое решаем - как сделать  это -->
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='exers.css') }}">
+
 </head>
 <body>
     <div class="container fade-in">
         <div style="display: inline-block; width: 457px" data-ignore="used only for top most containter width">
             <div class="container">
-                <h1>1</h1>
+                <h1>→</h1>
             </div>
         </div>
     </div>
@@ -32,7 +33,7 @@
             setTimeout(function() {
                 // Перенаправляем пользователя на страницу /exersice_text с сохранением названия темы в URL
                 window.location.href = '/exer_text_next?nextExercise=' + encodeURIComponent(subtopicName);
-            }, 2000); // Задержка в 2000 миллисекунд (2 секунды)
+            }, 1000); // Задержка в 2000 миллисекунд (2 секунды)
         }
     </script>
 </body>
