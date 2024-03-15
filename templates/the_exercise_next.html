@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Smarty - Задание #</title> <!-- нужно вместо # чтобы выводился номер задания которое решаем - как сделать  это -->
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='exers.css') }}">
+</head>
+<body>
+    <div class="container fade-in">
+        <div style="display: inline-block; width: 457px" data-ignore="used only for top most containter width">
+            <div class="container">
+                <h1>1</h1>
+            </div>
+        </div>
+    </div>
+    <script>
+        // Функция для извлечения параметра из URL
+        const urlParams = new URLSearchParams(window.location.search);
+
+        // Получаем значение параметра "subtopic" из URL
+        const subtopicName = urlParams.get('nextExercise');
+
+        // Если название темы уже присутствует в URL, ничего не делаем
+        if (!subtopicName) {
+            // Временная задержка перед перенаправлением пользователя
+            setTimeout(function() {
+                // Перенаправляем пользователя на страницу /exersice_text с передачей названия темы в URL
+                window.location.href = '/exer_text_next?nextExercise=' + encodeURIComponent('Название вашей темы');
+            }, 2000); // Задержка в 2000 миллисекунд (2 секунды)
+        } else {
+            // Если название темы уже есть в URL, перенаправляем пользователя через 2 секунды
+            setTimeout(function() {
+                // Перенаправляем пользователя на страницу /exersice_text с сохранением названия темы в URL
+                window.location.href = '/exer_text_next?nextExercise=' + encodeURIComponent(subtopicName);
+            }, 2000); // Задержка в 2000 миллисекунд (2 секунды)
+        }
+    </script>
+</body>
+</html>

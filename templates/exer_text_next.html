@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Smarty</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='exers.css') }}">
+</head>
+<body>
+    <div class="container fade-in">
+        <div style="display: flex; flex-direction: column;">
+            <div class="top-rectangle" style="display: flex; flex-direction: row;">
+                <div class="empty-place"></div>
+                <div class="empty-circle-top"></div>
+                <div class="empty-circle-top"></div>
+                <div class="empty-circle-top"></div>
+            </div>
+            <div class="bottom-rectangle" style="display: flex; flex-direction: column;">
+                <div class="text-box" id="exercise-container"></div>
+            </div>
+            <!-- -->
+        </div>
+    </div>
+    <script>
+        // Функция для извлечения параметра из URL
+        const urlParams = new URLSearchParams(window.location.search);
+
+        // Получаем значение параметра "exercise" из URL
+        const exercise = urlParams.get('nextExercise');
+
+        // Отображаем расшифрованный текст на странице
+        document.getElementById('exercise-container').textContent = exercise;
+
+        // JavaScript для автоматического перехода через 5 секунд с передачей параметра в URL
+        setTimeout(function() {
+            const nextUrl = '/exer_vars?exercise=' + encodeURIComponent(exercise);
+            window.location.href = nextUrl;
+        }, 2000);
+    </script>
+</body>
+</html>

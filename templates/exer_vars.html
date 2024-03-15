@@ -88,8 +88,6 @@
         }
     }
 
-
-
     function checkAnswer(element, boxElement) {
         if (answerSelected) return; // Если ответ уже выбран, ничего не делаем
 
@@ -151,11 +149,26 @@
                     // Если нет элементов с классом "var-box", просто добавляем кнопку в конец контейнера
                     container.appendChild(nextButtonContainer);
                 }
+                // Добавляем обработчик события на клик по кнопке "Далее"
+                nextButtonContainer.addEventListener('click', function() {
+                    // Отправляем текст упражнения на сервер и получаем следующее упражнение
+                    fetch('/send_exercise', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({ exercise: exercise })
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        // Перенаправляем пользователя на страницу /exersice_start с полученным значением в URL
+                        window.location.href = '/exersice_continuation?nextExercise=' + encodeURIComponent(data.nextExercise);
+                    })
+                    .catch(error => console.error('Error sending exercise:', error));
+
+                });
         }, delay);
-
-
     }
-
 
 </script>
 

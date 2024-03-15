@@ -180,10 +180,52 @@ def get_exercise_and_answers():
     # Отправляем ответ в формате JSON
     return jsonify({'exercise': exercises_with_answers[0] if exercises_with_answers else None})
 
+@app.route('/send_exercise', methods=['POST'])
+def send_exercise():
+    if request.is_json:
+        data = request.get_json()
+        exercise = data.get('exercise')
+        next_exercise = retrieve_next_exercise(exercise)
+        return jsonify({'nextExercise': next_exercise}), 200
+    else:
+        return jsonify({'error': 'Неверный формат данных'}), 400
+
+def retrieve_next_exercise(exercise):
+    conn = psycopg2.connect(**db_params)
+    cursor = conn.cursor()
+    sql_query = """
+    SELECT e2.exr_content AS next_exr_id, e2.exr_content
+    FROM exercises_choose_ans e1
+    JOIN exercises_choose_ans e2 ON e1.fk_subtopic_id = e2.fk_subtopic_id
+    WHERE e1.exr_content = %s
+    AND e1.fk_subtopic_id = e2.fk_subtopic_id
+    AND e1.exr_id + 1 = e2.exr_id
+    ORDER BY e2.exr_id
+    LIMIT 1;
+    """
+    cursor.execute(sql_query, (exercise,))
+    next_exercise = cursor.fetchone()[0]  # Получаем следующее упражнение
+    cursor.close()
+    conn.close()
+    return next_exercise
+
+
+
+@app.route('/exersices')
+def list_of_exers():
+    return render_template('list_of_exer.html')
+
 @app.route('/exersice_start')
 def exers_num():
     return render_template('the_exercise.html')
 
+@app.route('/exersice_continuation')
+def exers_number():
+    return render_template('the_exercise_next.html')
+
+@app.route('/exer_text_next')
+def exers_next_txt():
+    return render_template('exer_text_next.html')
 @app.route('/exersice_text')
 def exers_txt():
     return render_template('exer_text.html')
